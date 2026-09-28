@@ -2,7 +2,7 @@
  * Render paper/huth-formula.md and paper/huth-formula.zh.md to PDFs.
  *
  * The calculator does not build these in the browser. Run this script, then
- * commit the files it writes under public/paper/ so GitHub Pages can serve them.
+ * commit the files it writes under public/downloads/ so GitHub Pages can serve them.
  *
  *   npm run paper:pdf
  *
@@ -20,7 +20,7 @@ import MarkdownIt from 'markdown-it'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const paperDir = path.join(root, 'paper')
-const outDir = path.join(root, 'public', 'paper')
+const outDir = path.join(root, 'public', 'downloads')
 const chromeCandidates = [
   process.env.CHROME_PATH,
   '/usr/bin/google-chrome',
@@ -31,12 +31,12 @@ const chromeCandidates = [
 const documents = [
   {
     source: 'huth-formula.md',
-    output: 'huth-formula.pdf',
+    output: 'huth-guide.pdf',
     lang: 'en',
   },
   {
     source: 'huth-formula.zh.md',
-    output: 'huth-formula.zh.pdf',
+    output: 'huth-guide.zh.pdf',
     lang: 'zh-CN',
   },
 ]
@@ -164,7 +164,10 @@ function renderMarkdown(markdown) {
     if (!id) console.warn(`Unmapped anchor: ${slug}`)
     return id ? `href="#${id}"` : `href="#${raw}"`
   })
-  html = html.replace(/href="([^"]+)\.md"/g, 'href="$1.pdf"')
+  html = html.replace(/href="([^"]+)\.md"/g, (_, name) => {
+    const match = documents.find((document) => document.source === `${name}.md`)
+    return `href="${match ? match.output : `${name}.pdf`}"`
+  })
   for (let index = parts.length - 1; index >= 0; index -= 1) {
     html = html.replaceAll(`%%MATH${index}%%`, () => renderMath(parts[index]))
   }

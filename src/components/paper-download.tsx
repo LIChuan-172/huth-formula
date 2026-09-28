@@ -2,21 +2,21 @@ import { Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useLocale } from '@/lib/use-locale'
 
-const PAPER_FILES = {
-  en: 'huth-formula.pdf',
-  zh: 'huth-formula.zh.pdf',
+const GUIDE_FILES = {
+  en: 'huth-guide.pdf',
+  zh: 'huth-guide.zh.pdf',
 } as const
 
 export function PaperDownload() {
   const { language, m } = useLocale()
-  const file = PAPER_FILES[language]
-  const href = `${import.meta.env.BASE_URL}paper/${file}`
+  const file = GUIDE_FILES[language]
+  const href = `${import.meta.env.BASE_URL}downloads/${file}`
 
   return (
     <Button variant="default" size="sm" asChild>
       <a href={href} download={file}>
         <Download />
-        {m.header.paper}
+        {m.header.guide}
       </a>
     </Button>
   )

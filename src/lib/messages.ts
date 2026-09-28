@@ -5,7 +5,7 @@ export type Language = 'en' | 'zh'
 export interface Messages {
   meta: { title: string; description: string }
   language: { label: string; en: string; zh: string }
-  header: { eyebrow: string; title: string; lede: string; paper: string }
+  header: { eyebrow: string; title: string; lede: string; guide: string }
   footer: { local: string; disclaimer: string }
   inputs: {
     title: string
@@ -67,7 +67,7 @@ const en = {
     eyebrow: 'Fastener flexibility',
     title: 'Huth fastener stiffness calculator',
     lede: 'Estimate the shear compliance and stiffness of a bolt or rivet in a lap joint using Huth’s 1986 formula. Supports single and double shear, and metallic and composite plates. Thicknesses and diameter are in mm; moduli are in MPa.',
-    paper: 'Paper (PDF)',
+    guide: 'Guide (PDF)',
   },
   footer: {
     local: 'Runs entirely in your browser; nothing you enter is sent anywhere.',
@@ -160,7 +160,7 @@ const zh = {
     eyebrow: '紧固件柔度',
     title: 'Huth 紧固件刚度计算器',
     lede: '用 Huth 1986 公式估算搭接接头中螺栓或铆钉的剪切柔度与刚度。支持单剪与双剪，以及金属与复合材料板。厚度和直径单位为 mm，模量单位为 MPa。',
-    paper: '论文（PDF）',
+    guide: '导读（PDF）',
   },
   footer: {
     local: '计算完全在浏览器中进行，输入内容不会发送到任何地方。',
