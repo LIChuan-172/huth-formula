@@ -11,8 +11,9 @@ k = 1 / C
 - Joint-type constants: bolted metallic `a = 2/3, b = 3.0`; riveted metallic `a = 2/5, b = 2.2`; bolted graphite/epoxy `a = 2/3, b = 4.2`; or enter your own `a` and `b`
 - Metric units only: thicknesses and diameter in mm, moduli in MPa, compliance in mm/N, stiffness in N/mm
 - Shows the intermediate factors and each bearing term's share of the total flexibility
-- Input validation and an explanation of the formula, its symbols and its limits
+- Input validation as you type
 - English and Chinese interface, with a language switch in the page header (the choice is remembered in the browser)
+- Download of the beginner paper as a PDF in the active language
 
 The implementation follows the symmetric form from Huth's original LBF report FB-172 (1984). The ASTM STP 927 reprint contains a typographical error (an `n` in place of the `2` in the third bracket term); see the notes in the app.
 
@@ -24,9 +25,11 @@ The implementation follows the symmetric form from Huth's original LBF report FB
 | `src/lib/units.ts` | Metric unit labels (mm, MPa, mm/N, N/mm) and number formatting |
 | `src/lib/calculator-state.ts` | Form state, parsing and unit switching |
 | `src/lib/*.test.ts` | Vitest unit tests, including worked examples |
-| `src/components/` | React UI (inputs, results, explanation) built with shadcn/ui |
+| `src/components/` | React UI (inputs, results, paper download) built with shadcn/ui |
 | `.github/workflows/deploy-pages.yml` | Build and deploy to GitHub Pages |
 | `paper/` | Beginner paper, metric units: [English](paper/huth-formula.md), [简体中文](paper/huth-formula.zh.md) |
+| `scripts/build-paper-pdf.mjs` | Renders those markdown files, with figures and math, to PDF |
+| `public/paper/` | The PDFs the site serves (`huth-formula.pdf`, `huth-formula.zh.pdf`) |
 
 ## Running locally
 
@@ -39,11 +42,14 @@ npm test           # Vitest unit tests
 npm run lint       # oxlint
 npm run build      # type-check and production build into dist/
 npm run preview    # serve the production build locally
+npm run paper:pdf  # regenerate public/paper/*.pdf (needs Google Chrome and a CJK font)
 ```
+
+`npm run paper:pdf` reads `paper/huth-formula.md` and `paper/huth-formula.zh.md`, sets the mathematics with KaTeX, embeds `paper/figures/` and `paper/figures/zh/`, and writes the PDFs into `public/paper/`. Vite copies that directory into the site. The Chinese PDF uses a CJK font (Noto Serif CJK SC when it is installed). Commit the generated PDFs after changing a paper so GitHub Pages does not have to run Chrome.
 
 ## Stack
 
-Vite, React 19, TypeScript, Tailwind CSS v4 and [shadcn/ui](https://ui.shadcn.com). The formula is rendered with native MathML, so there is no math-typesetting dependency.
+Vite, React 19, TypeScript, Tailwind CSS v4 and [shadcn/ui](https://ui.shadcn.com). The PDF build uses KaTeX; the calculator page itself does not typeset mathematics.
 
 ## Deployment to GitHub Pages
 

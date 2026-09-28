@@ -5,7 +5,7 @@ export type Language = 'en' | 'zh'
 export interface Messages {
   meta: { title: string; description: string }
   language: { label: string; en: string; zh: string }
-  header: { eyebrow: string; title: string; lede: string; aboutLink: string }
+  header: { eyebrow: string; title: string; lede: string; paper: string }
   footer: { local: string; disclaimer: string }
   inputs: {
     title: string
@@ -54,34 +54,6 @@ export interface Messages {
     summaryTitle: string
     shearLine: (shear: ShearType, n: number, a: number, b: number) => string
   }
-  about: {
-    title: string
-    description: string
-    paragraph1: string
-    paragraph2: string
-    compliance: string
-    stiffness: string
-    symbols: string
-    symbolCompliance: string
-    symbolStiffness: string
-    symbolThickness: string
-    symbolDiameter: string
-    symbolModulus: string
-    symbolPlanes: string
-    symbolExponent: string
-    symbolCoefficient: string
-    constants: string
-    joint: string
-    customHint: string
-    reading: string
-    readingBody: string
-    limits: string
-    limitForm: string
-    limitAssumptions: string
-    limitDoubleShear: string
-    limitUnits: string
-    references: string
-  }
 }
 
 const en = {
@@ -95,7 +67,7 @@ const en = {
     eyebrow: 'Fastener flexibility',
     title: 'Huth fastener stiffness calculator',
     lede: 'Estimate the shear compliance and stiffness of a bolt or rivet in a lap joint using Huth’s 1986 formula. Supports single and double shear, and metallic and composite plates. Thicknesses and diameter are in mm; moduli are in MPa.',
-    aboutLink: 'How the formula works',
+    paper: 'Paper (PDF)',
   },
   footer: {
     local: 'Runs entirely in your browser; nothing you enter is sent anywhere.',
@@ -171,41 +143,6 @@ const en = {
     shearLine: (shear: ShearType, n: number, a: number, b: number) =>
       `${shear} shear (n = ${n}), a = ${a}, b = ${b}`,
   },
-  about: {
-    title: 'What this calculates',
-    description: 'The Huth formula is a semi-empirical estimate of how much a single fastener deflects in shear.',
-    paragraph1:
-      'When a bolted or riveted joint carries load, the fastener does not act as a rigid pin. It bends, tilts and bears into the plates, so the two plates slip relative to one another. That slip per unit of load is the fastener compliance; its reciprocal is the fastener stiffness. In a multi-row joint the stiffness of each fastener decides how the total load is shared between rows, which in turn governs bearing stresses and fatigue life.',
-    paragraph2:
-      'Heimo Huth derived the expression below from load-transfer tests on aluminium, titanium and graphite/epoxy specimens (LBF report FB-172, 1984; ASTM STP 927, 1986). It is widely used as the spring stiffness for fastener elements in finite-element and analytical joint models.',
-    compliance: 'compliance',
-    stiffness: 'stiffness',
-    symbols: 'Symbols',
-    symbolCompliance: 'Fastener compliance (flexibility): displacement per unit of transferred load.',
-    symbolStiffness: 'Fastener stiffness, the reciprocal of the compliance.',
-    symbolThickness: 'Plate thicknesses. In double shear, plate 2 is the centre plate and t1 is one outer plate.',
-    symbolDiameter: 'Fastener shank diameter.',
-    symbolModulus: "Young's moduli of plate 1, plate 2 and the fastener.",
-    symbolPlanes: 'Number of shear planes: 1 for single shear, 2 for double shear.',
-    symbolExponent: 'Exponent on the thickness-to-diameter ratio; captures fastener bending and tilting.',
-    symbolCoefficient: 'Empirical coefficient fitted to Huth’s test data for each joint type.',
-    constants: 'Joint-type constants',
-    joint: 'Joint',
-    customHint: 'Use custom constants when you have your own test data or a company-specific calibration.',
-    reading: 'Reading the terms',
-    readingBody:
-      'The leading factor scales the flexibility with how slender the fastener is relative to the grip: the larger the combined thickness compared to the diameter, the more the fastener bends. The four terms inside the brackets are the bearing flexibilities of plate 1, plate 2 and the fastener at each plate. The n in the second and fourth terms halves the contribution of the centre plate in double shear, because it bears on two shear planes.',
-    limits: 'Notes and limits',
-    limitForm:
-      'This tool follows the symmetric form from Huth’s original report. The ASTM STP 927 reprint contains a typographical error (an n instead of a 2 in the third term) that makes single-shear results depend on which plate is labelled 1.',
-    limitAssumptions:
-      'The model assumes elastic behaviour, a neat-fit fastener and no clamp-up friction. It does not account for hole clearance, interference fit, countersinks or fastener preload.',
-    limitDoubleShear:
-      'For double shear, t1 is the thickness of one outer plate and t2 is the full thickness of the centre plate.',
-    limitUnits:
-      'Thicknesses and the diameter are in millimetres and moduli are in megapascals. Compliance is then in mm/N and stiffness is in N/mm.',
-    references: 'References',
-  },
 } satisfies Messages
 
 /** Inserts a space when a label ends in Latin text, so “系数 b” does not collide with the following Chinese. */
@@ -223,7 +160,7 @@ const zh = {
     eyebrow: '紧固件柔度',
     title: 'Huth 紧固件刚度计算器',
     lede: '用 Huth 1986 公式估算搭接接头中螺栓或铆钉的剪切柔度与刚度。支持单剪与双剪，以及金属与复合材料板。厚度和直径单位为 mm，模量单位为 MPa。',
-    aboutLink: '公式说明',
+    paper: '论文（PDF）',
   },
   footer: {
     local: '计算完全在浏览器中进行，输入内容不会发送到任何地方。',
@@ -298,39 +235,6 @@ const zh = {
     summaryTitle: 'Huth 紧固件柔度',
     shearLine: (shear: ShearType, n: number, a: number, b: number) =>
       `${shear === 'double' ? '双剪' : '单剪'}（n = ${n}），a = ${a}，b = ${b}`,
-  },
-  about: {
-    title: '计算内容',
-    description: 'Huth 公式是对单个紧固件在剪切下挠曲量的半经验估算。',
-    paragraph1:
-      '螺栓或铆接接头受载时，紧固件并不是一根刚性销。它会弯曲、倾斜，并挤压孔壁，使两块板发生相对滑移。单位载荷下的滑移量就是紧固件柔度，其倒数是紧固件刚度。在多排接头中，每个紧固件的刚度决定总载荷如何在各排之间分配，进而影响挤压应力与疲劳寿命。',
-    paragraph2:
-      'Heimo Huth 根据铝、钛和石墨/环氧试样的传载试验推导出下面的表达式（LBF 报告 FB-172，1984；ASTM STP 927，1986）。它被广泛用作有限元和分析接头模型中紧固件单元的弹簧刚度。',
-    compliance: '柔度',
-    stiffness: '刚度',
-    symbols: '符号',
-    symbolCompliance: '紧固件柔度（柔性）：单位传递载荷下的位移。',
-    symbolStiffness: '紧固件刚度，即柔度的倒数。',
-    symbolThickness: '板厚。双剪时，板 2 为中间板，t1 为一侧外板。',
-    symbolDiameter: '紧固件钉杆直径。',
-    symbolModulus: '板 1、板 2 和紧固件的杨氏模量。',
-    symbolPlanes: '剪切面数：单剪为 1，双剪为 2。',
-    symbolExponent: '厚度与直径之比的指数，反映紧固件的弯曲与倾斜。',
-    symbolCoefficient: '按接头类型由 Huth 试验数据拟合的经验系数。',
-    constants: '接头类型常数',
-    joint: '接头',
-    customHint: '若已有自有试验数据或企业标定值，请使用自定义常数。',
-    reading: '各项的含义',
-    readingBody:
-      '前导因子按紧固件相对夹持厚度的细长程度放大柔度：组合厚度相对直径越大，紧固件弯曲越明显。括号中的四项分别是板 1、板 2 以及紧固件在各板处的挤压柔度。第二项和第四项中的 n 使双剪时中间板的贡献减半，因为它作用在两个剪切面上。',
-    limits: '说明与适用范围',
-    limitForm:
-      '本工具采用 Huth 原始报告中的对称形式。ASTM STP 927 的转载本有一处排印错误（第三项中的 2 被印成了 n），会使单剪结果取决于哪块板标为 1。',
-    limitAssumptions:
-      '模型假定弹性行为、紧配合紧固件且无夹紧摩擦。它不考虑孔间隙、干涉配合、锪窝或紧固件预紧力。',
-    limitDoubleShear: '双剪时，t1 为一侧外板的厚度，t2 为中间板的全厚度。',
-    limitUnits: '厚度和直径的单位为毫米，模量的单位为兆帕。柔度则为 mm/N，刚度为 N/mm。',
-    references: '参考文献',
   },
 } satisfies Messages
 

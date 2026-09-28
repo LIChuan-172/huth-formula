@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
-import { Explanation } from '@/components/explanation'
 import { InputsCard } from '@/components/inputs-card'
 import { LanguageSwitch } from '@/components/language-switch'
+import { PaperDownload } from '@/components/paper-download'
 import { ResultsCard } from '@/components/results-card'
 import { defaultFormState, parseForm, type FormState } from '@/lib/calculator-state'
 import { computeHuth } from '@/lib/huth'
@@ -27,17 +27,12 @@ export default function App() {
               <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{m.header.eyebrow}</p>
               <h1 className="mt-1 text-2xl font-semibold tracking-tight sm:text-3xl">{m.header.title}</h1>
             </div>
-            <LanguageSwitch />
+            <div className="flex flex-wrap items-center gap-2">
+              <PaperDownload />
+              <LanguageSwitch />
+            </div>
           </div>
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <p className="max-w-2xl text-sm text-muted-foreground">{m.header.lede}</p>
-            <a
-              href="#about"
-              className="shrink-0 text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
-            >
-              {m.header.aboutLink}
-            </a>
-          </div>
+          <p className="max-w-3xl text-sm text-muted-foreground">{m.header.lede}</p>
         </div>
       </header>
 
@@ -52,9 +47,6 @@ export default function App() {
         </div>
         <div className="grid gap-6 lg:col-span-5 lg:sticky lg:top-6">
           <ResultsCard input={parsed.input} result={result} errors={parsed.errors} />
-        </div>
-        <div className="lg:col-span-12">
-          <Explanation />
         </div>
       </main>
 
