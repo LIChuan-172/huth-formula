@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { InputsCard } from '@/components/inputs-card'
 import { LanguageSwitch } from '@/components/language-switch'
+import { OfflineCopy } from '@/components/offline-copy'
 import { PaperDownload } from '@/components/paper-download'
 import { ResultsCard } from '@/components/results-card'
 import { defaultFormState, parseForm, type FormState } from '@/lib/calculator-state'
@@ -29,6 +30,7 @@ export default function App() {
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <PaperDownload />
+              <OfflineCopy />
               <LanguageSwitch />
             </div>
           </div>

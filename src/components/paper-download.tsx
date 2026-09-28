@@ -1,5 +1,7 @@
+import { useEffect, useMemo } from 'react'
 import { Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { embeddedGuideUrl } from '@/lib/offline-copy'
 import { useLocale } from '@/lib/use-locale'
 
 const GUIDE_FILES = {
@@ -10,7 +12,12 @@ const GUIDE_FILES = {
 export function PaperDownload() {
   const { language, m } = useLocale()
   const file = GUIDE_FILES[language]
-  const href = `${import.meta.env.BASE_URL}downloads/${file}`
+  const embedded = useMemo(() => embeddedGuideUrl(language), [language])
+  useEffect(() => {
+    if (!embedded) return
+    return () => URL.revokeObjectURL(embedded)
+  }, [embedded])
+  const href = embedded ?? `${import.meta.env.BASE_URL}downloads/${file}`
 
   return (
     <Button variant="default" size="sm" asChild>

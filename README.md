@@ -14,6 +14,7 @@ k = 1 / C
 - Input validation as you type
 - English and Chinese interface, with a language switch in the page header (the choice is remembered in the browser)
 - Download of the beginner guide as a PDF in the active language
+- Download of a self-contained offline copy (`downloads/huth-calculator.html`). `npm run build` writes that file into `dist/downloads/` with the CSS, JavaScript, and both guide PDFs inlined. Opened from disk, it has no Offline copy button. The live site still links the guides as ordinary PDF files.
 
 The implementation follows the symmetric form from Huth's original LBF report FB-172 (1984). The ASTM STP 927 reprint contains a typographical error (an `n` in place of the `2` in the third bracket term); see the notes in the app.
 
@@ -40,7 +41,7 @@ npm install
 npm run dev        # dev server with hot reload
 npm test           # Vitest unit tests
 npm run lint       # oxlint
-npm run build      # type-check and production build into dist/
+npm run build      # type-check, production build into dist/, and the offline HTML
 npm run preview    # serve the production build locally
 npm run paper:pdf  # regenerate public/downloads/*.pdf (needs Google Chrome and a CJK font)
 ```
