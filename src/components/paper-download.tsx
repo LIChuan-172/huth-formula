@@ -13,7 +13,7 @@ export function PaperDownload() {
   const href = `${import.meta.env.BASE_URL}paper/${file}`
 
   return (
-    <Button variant="outline" size="sm" asChild>
+    <Button variant="default" size="sm" asChild>
       <a href={href} download={file}>
         <Download />
         {m.header.paper}

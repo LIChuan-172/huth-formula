@@ -185,14 +185,14 @@ interface ResultTileProps {
 
 function ResultTile({ label, symbol, value, unit, emphasis }: ResultTileProps) {
   return (
-    <div className={emphasis ? 'rounded-xl bg-primary p-4 text-primary-foreground' : 'rounded-xl bg-muted p-4'}>
-      <div className="flex items-baseline justify-between text-xs uppercase tracking-wide opacity-80">
+    <div className={emphasis ? 'rounded-xl bg-card p-4 ring-1 ring-border' : 'rounded-xl bg-muted p-4'}>
+      <div className="flex items-baseline justify-between text-xs uppercase tracking-wide text-muted-foreground">
         <span>{label}</span>
         <span className="font-serif text-sm italic normal-case">{symbol}</span>
       </div>
       <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
-        <span className="font-mono text-2xl font-semibold tabular-nums whitespace-nowrap">{value}</span>
-        <span className="text-sm opacity-80">{unit}</span>
+        <span className="font-mono text-2xl font-semibold tabular-nums whitespace-nowrap text-primary">{value}</span>
+        <span className="text-sm text-muted-foreground">{unit}</span>
       </div>
     </div>
   )

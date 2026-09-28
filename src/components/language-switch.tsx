@@ -24,7 +24,7 @@ export function LanguageSwitch() {
             key={code}
             type="button"
             size="sm"
-            variant={selected ? 'secondary' : 'ghost'}
+            variant={selected ? 'default' : 'ghost'}
             aria-pressed={selected}
             lang={lang}
             className={cn('min-w-16', !selected && 'text-muted-foreground')}
