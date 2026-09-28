@@ -43,11 +43,22 @@ describe('convertFormUnits', () => {
     expect(imperial.shear).toBe('single')
   })
 
-  it('round-trips without drifting beyond display precision', () => {
+  it('round-trips back to the original round values', () => {
     const state = defaultFormState()
     const back = convertFormUnits(convertFormUnits(state, 'imperial'), 'si')
-    expect(Number(back.t1)).toBeCloseTo(2, 4)
-    expect(Number(back.E1)).toBeCloseTo(72_000, -1)
+    expect(back.t1).toBe('2')
+    expect(back.t2).toBe('3')
+    expect(back.d).toBe('5')
+    expect(back.E1).toBe('72000')
+    expect(back.Ef).toBe('110000')
+  })
+
+  it('round-trips imperial round values too', () => {
+    const imperial = { ...defaultFormState(), units: 'imperial' as const, t1: '0.04', t2: '0.063', d: '0.1875', E1: '10500000', E2: '10500000', Ef: '16000000' }
+    const back = convertFormUnits(convertFormUnits(imperial, 'si'), 'imperial')
+    expect(back.t1).toBe('0.04')
+    expect(back.d).toBe('0.1875')
+    expect(back.E1).toBe('10500000')
   })
 
   it('leaves blank or malformed fields alone', () => {
@@ -66,6 +77,8 @@ describe('formatInputValue', () => {
   it('trims trailing noise and returns an empty string for non-finite input', () => {
     expect(formatInputValue(0.07874015748)).toBe('0.0787402')
     expect(formatInputValue(72000)).toBe('72000')
+    expect(formatInputValue(2.9999994)).toBe('3')
+    expect(formatInputValue(0)).toBe('0')
     expect(formatInputValue(Number.NaN)).toBe('')
   })
 })

@@ -71,7 +71,7 @@ export function ResultsCard({ units, input, result, errors }: ResultsCardProps) 
       <CardContent className="grid gap-5">
         {result ? (
           <>
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-3">
               <ResultTile
                 label="Stiffness"
                 symbol="k"
@@ -194,11 +194,11 @@ function ResultTile({ label, symbol, value, unit, secondary, emphasis }: ResultT
         <span>{label}</span>
         <span className="font-serif text-sm italic normal-case">{symbol}</span>
       </div>
-      <div className="mt-2 flex flex-wrap items-baseline gap-x-2">
-        <span className="font-mono text-2xl font-semibold tabular-nums break-all">{value}</span>
+      <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+        <span className="font-mono text-2xl font-semibold tabular-nums whitespace-nowrap">{value}</span>
         <span className="text-sm opacity-80">{unit}</span>
       </div>
-      <div className="mt-1 font-mono text-xs tabular-nums opacity-70">= {secondary}</div>
+      <div className="mt-1 font-mono text-xs tabular-nums whitespace-nowrap opacity-70">= {secondary}</div>
     </div>
   )
 }

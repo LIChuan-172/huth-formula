@@ -53,9 +53,9 @@ export function InputsCard({ state, errors, onFieldChange, onUnitsChange, onRese
       <CardContent className="grid gap-6">
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="grid gap-1.5">
-            <Label>Unit system</Label>
+            <Label id="units-label">Unit system</Label>
             <Tabs value={state.units} onValueChange={(value) => onUnitsChange(value as UnitSystem)}>
-              <TabsList className="w-full">
+              <TabsList className="w-full" aria-labelledby="units-label">
                 <TabsTrigger value="si">SI (mm, MPa)</TabsTrigger>
                 <TabsTrigger value="imperial">Imperial (in, psi)</TabsTrigger>
               </TabsList>
@@ -63,9 +63,9 @@ export function InputsCard({ state, errors, onFieldChange, onUnitsChange, onRese
             <p className="text-xs text-muted-foreground">Switching units converts the values you have entered.</p>
           </div>
           <div className="grid gap-1.5">
-            <Label>Shear configuration</Label>
+            <Label id="shear-label">Shear configuration</Label>
             <Tabs value={state.shear} onValueChange={(value) => onFieldChange('shear', value as ShearType)}>
-              <TabsList className="w-full">
+              <TabsList className="w-full" aria-labelledby="shear-label">
                 <TabsTrigger value="single">Single shear (n = 1)</TabsTrigger>
                 <TabsTrigger value="double">Double shear (n = 2)</TabsTrigger>
               </TabsList>
