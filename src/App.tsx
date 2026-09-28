@@ -25,8 +25,7 @@ export default function App() {
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-6 sm:px-6">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{m.header.eyebrow}</p>
-              <h1 className="mt-1 text-2xl font-semibold tracking-tight sm:text-3xl">{m.header.title}</h1>
+              <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{m.header.title}</h1>
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <PaperDownload />
