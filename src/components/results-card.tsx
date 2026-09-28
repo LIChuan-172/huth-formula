@@ -5,7 +5,10 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import type { HuthInput, HuthResult, ValidationErrors } from '@/lib/huth'
+import type { HuthField, HuthInput, HuthResult, ValidationErrors } from '@/lib/huth'
+import { localizeFieldError } from '@/lib/localize-error'
+import { useLocale } from '@/lib/use-locale'
+import type { Messages } from '@/lib/messages'
 import { UNIT_LABELS, convertCompliance, convertStiffness, formatNumber, type UnitSystem } from '@/lib/units'
 
 interface ResultsCardProps {
@@ -19,13 +22,13 @@ function otherSystem(units: UnitSystem): UnitSystem {
   return units === 'si' ? 'imperial' : 'si'
 }
 
-function buildSummary(units: UnitSystem, input: HuthInput, result: HuthResult): string {
+function buildSummary(units: UnitSystem, input: HuthInput, result: HuthResult, m: Messages): string {
   const u = UNIT_LABELS[units]
   const lines = [
-    'Huth fastener flexibility',
+    m.results.summaryTitle,
     `t1 = ${input.t1} ${u.length}, t2 = ${input.t2} ${u.length}, d = ${input.d} ${u.length}`,
     `E1 = ${input.E1} ${u.modulus}, E2 = ${input.E2} ${u.modulus}, Ef = ${input.Ef} ${u.modulus}`,
-    `${input.shear} shear (n = ${result.n}), a = ${input.a}, b = ${input.b}`,
+    m.results.shearLine(input.shear, result.n, input.a, input.b),
     `C = ${result.compliance.toPrecision(6)} ${u.compliance}`,
     `k = ${result.stiffness.toPrecision(6)} ${u.stiffness}`,
   ]
@@ -33,6 +36,7 @@ function buildSummary(units: UnitSystem, input: HuthInput, result: HuthResult): 
 }
 
 export function ResultsCard({ units, input, result, errors }: ResultsCardProps) {
+  const { m } = useLocale()
   const [copied, setCopied] = useState(false)
   const u = UNIT_LABELS[units]
   const other = otherSystem(units)
@@ -47,24 +51,26 @@ export function ResultsCard({ units, input, result, errors }: ResultsCardProps) 
   async function copySummary() {
     if (!result) return
     try {
-      await navigator.clipboard.writeText(buildSummary(units, input, result))
+      await navigator.clipboard.writeText(buildSummary(units, input, result, m))
       setCopied(true)
     } catch {
       setCopied(false)
     }
   }
 
-  const errorMessages = Object.values(errors)
+  const errorMessages = (Object.entries(errors) as [HuthField, string][]).map(([field, message]) =>
+    localizeFieldError(field, message, m),
+  )
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Results</CardTitle>
-        <CardDescription>Compliance and stiffness of one fastener in shear.</CardDescription>
+        <CardTitle>{m.results.title}</CardTitle>
+        <CardDescription>{m.results.description}</CardDescription>
         <CardAction>
           <Button variant="outline" size="sm" onClick={copySummary} disabled={!result}>
             {copied ? <Check data-icon="inline-start" /> : <Copy data-icon="inline-start" />}
-            {copied ? 'Copied' : 'Copy'}
+            {copied ? m.results.copied : m.results.copy}
           </Button>
         </CardAction>
       </CardHeader>
@@ -73,7 +79,7 @@ export function ResultsCard({ units, input, result, errors }: ResultsCardProps) 
           <>
             <div className="grid gap-3">
               <ResultTile
-                label="Stiffness"
+                label={m.results.stiffness}
                 symbol="k"
                 value={formatNumber(result.stiffness)}
                 unit={u.stiffness}
@@ -81,7 +87,7 @@ export function ResultsCard({ units, input, result, errors }: ResultsCardProps) 
                 emphasis
               />
               <ResultTile
-                label="Compliance"
+                label={m.results.compliance}
                 symbol="C"
                 value={formatNumber(result.compliance)}
                 unit={u.compliance}
@@ -93,7 +99,7 @@ export function ResultsCard({ units, input, result, errors }: ResultsCardProps) 
 
             <div className="grid gap-3">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-medium">Breakdown</h3>
+                <h3 className="text-sm font-medium">{m.results.breakdown}</h3>
                 <Badge variant="secondary" className="font-mono">
                   n = {result.n}
                 </Badge>
@@ -102,16 +108,16 @@ export function ResultsCard({ units, input, result, errors }: ResultsCardProps) 
                 <BreakdownRow
                   label={
                     <>
-                      Geometry factor ((t<sub>1</sub> + t<sub>2</sub>) / 2d)<sup>a</sup>
+                      {m.results.geometryFactor} ((t<sub>1</sub> + t<sub>2</sub>) / 2d)<sup>a</sup>
                     </>
                   }
                   value={formatNumber(result.geometryFactor)}
                 />
-                <BreakdownRow label="Joint factor b / n" value={formatNumber(result.jointFactor)} />
+                <BreakdownRow label={m.results.jointFactor} value={formatNumber(result.jointFactor)} />
                 <BreakdownRow
                   label={
                     <>
-                      Plate 1 bearing 1 / (t<sub>1</sub>E<sub>1</sub>)
+                      {m.results.plate1Bearing} 1 / (t<sub>1</sub>E<sub>1</sub>)
                     </>
                   }
                   value={formatNumber(result.terms.plate1Bearing)}
@@ -121,7 +127,7 @@ export function ResultsCard({ units, input, result, errors }: ResultsCardProps) 
                 <BreakdownRow
                   label={
                     <>
-                      Plate 2 bearing 1 / (n t<sub>2</sub>E<sub>2</sub>)
+                      {m.results.plate2Bearing} 1 / (n t<sub>2</sub>E<sub>2</sub>)
                     </>
                   }
                   value={formatNumber(result.terms.plate2Bearing)}
@@ -131,7 +137,7 @@ export function ResultsCard({ units, input, result, errors }: ResultsCardProps) 
                 <BreakdownRow
                   label={
                     <>
-                      Fastener at plate 1 1 / (2 t<sub>1</sub>E<sub>f</sub>)
+                      {m.results.fastenerAtPlate1} 1 / (2 t<sub>1</sub>E<sub>f</sub>)
                     </>
                   }
                   value={formatNumber(result.terms.fastenerAtPlate1)}
@@ -141,7 +147,7 @@ export function ResultsCard({ units, input, result, errors }: ResultsCardProps) 
                 <BreakdownRow
                   label={
                     <>
-                      Fastener at plate 2 1 / (2 n t<sub>2</sub>E<sub>f</sub>)
+                      {m.results.fastenerAtPlate2} 1 / (2 n t<sub>2</sub>E<sub>f</sub>)
                     </>
                   }
                   value={formatNumber(result.terms.fastenerAtPlate2)}
@@ -149,21 +155,21 @@ export function ResultsCard({ units, input, result, errors }: ResultsCardProps) 
                   share={result.terms.fastenerAtPlate2 / result.bracketSum}
                 />
                 <BreakdownRow
-                  label="Bracket sum"
+                  label={m.results.bracketSum}
                   value={formatNumber(result.bracketSum)}
                   unit={u.compliance}
                   strong
                 />
               </dl>
               <p className="text-xs text-muted-foreground">
-                Percentages show each term's share of the bracket sum, i.e. where the flexibility comes from.
+                {m.results.shareHint}
               </p>
             </div>
           </>
         ) : (
           <Alert variant="destructive">
             <TriangleAlert />
-            <AlertTitle>Check the highlighted inputs</AlertTitle>
+            <AlertTitle>{m.errors.summary}</AlertTitle>
             <AlertDescription>
               <ul className="list-disc pl-4">
                 {errorMessages.map((message) => (

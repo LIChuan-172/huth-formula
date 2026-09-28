@@ -12,6 +12,7 @@ k = 1 / C
 - SI (mm, MPa → mm/N, N/mm) and imperial (in, psi → in/lbf, lbf/in) units, with conversion when you switch
 - Shows the intermediate factors and each bearing term's share of the total flexibility
 - Input validation and an explanation of the formula, its symbols and its limits
+- English and Chinese interface, with a language switch in the page header (the choice is remembered in the browser)
 
 The implementation follows the symmetric form from Huth's original LBF report FB-172 (1984). The ASTM STP 927 reprint contains a typographical error (an `n` in place of the `2` in the third bracket term); see the notes in the app.
 

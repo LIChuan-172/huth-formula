@@ -1,12 +1,15 @@
 import { useMemo, useState } from 'react'
 import { Explanation } from '@/components/explanation'
 import { InputsCard } from '@/components/inputs-card'
+import { LanguageSwitch } from '@/components/language-switch'
 import { ResultsCard } from '@/components/results-card'
 import { convertFormUnits, defaultFormState, parseForm, type FormState } from '@/lib/calculator-state'
 import { computeHuth } from '@/lib/huth'
+import { useLocale } from '@/lib/use-locale'
 import type { UnitSystem } from '@/lib/units'
 
 export default function App() {
+  const { m } = useLocale()
   const [state, setState] = useState<FormState>(defaultFormState)
 
   const parsed = useMemo(() => parseForm(state), [state])
@@ -23,18 +26,23 @@ export default function App() {
   return (
     <div className="min-h-svh bg-background text-foreground">
       <header className="border-b">
-        <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-6 sm:flex-row sm:items-end sm:justify-between sm:px-6">
-          <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Fastener flexibility</p>
-            <h1 className="mt-1 text-2xl font-semibold tracking-tight sm:text-3xl">Huth fastener stiffness calculator</h1>
-            <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-              Estimate the shear compliance and stiffness of a bolt or rivet in a lap joint using Huth&rsquo;s 1986
-              formula. Supports single and double shear, metallic and composite plates, SI and imperial units.
-            </p>
+        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-6 sm:px-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{m.header.eyebrow}</p>
+              <h1 className="mt-1 text-2xl font-semibold tracking-tight sm:text-3xl">{m.header.title}</h1>
+            </div>
+            <LanguageSwitch />
           </div>
-          <a href="#about" className="text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">
-            How the formula works
-          </a>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <p className="max-w-2xl text-sm text-muted-foreground">{m.header.lede}</p>
+            <a
+              href="#about"
+              className="shrink-0 text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+            >
+              {m.header.aboutLink}
+            </a>
+          </div>
         </div>
       </header>
 
@@ -58,8 +66,8 @@ export default function App() {
 
       <footer className="border-t">
         <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:justify-between sm:px-6">
-          <span>Runs entirely in your browser; nothing you enter is sent anywhere.</span>
-          <span>Engineering estimate only. Verify against test data for certification work.</span>
+          <span>{m.footer.local}</span>
+          <span>{m.footer.disclaimer}</span>
         </div>
       </footer>
     </div>
