@@ -1,3 +1,5 @@
+**简体中文：** [Huth 紧固件柔度公式：入门导读](huth-formula.zh.md)
+
 # The Huth Formula for Fastener Flexibility: A Beginner's Guide
 
 *An introduction to fastener flexibility (compliance) in mechanically fastened joints, built around the semi-empirical formula published by Heimo Huth (1984, 1986).*
@@ -30,7 +32,7 @@ By the end you should be able to:
 - explain, in one paragraph, why the fasteners in a multi-row joint do **not** share the load equally and why their flexibility decides how unequal the sharing is;
 - state the difference between compliance $C$ and stiffness $k$ and convert between them;
 - write down the Huth formula from memory, say what every symbol means, and pick the right constants for a bolted metallic, riveted metallic, or bolted graphite/epoxy joint;
-- carry out the calculation by hand in either SI or US customary units without mixing them up;
+- carry out the calculation by hand in millimetres and megapascals, and recognise a result that is off because the units were mixed;
 - know which other formulas you are likely to meet (Tate & Rosenfeld, Swift/Douglas, Boeing, Grumman) and when each one is normally used;
 - recognise the limits of any of these formulas so that you do not over-trust the result.
 
@@ -76,8 +78,8 @@ $$
 \delta = C\,F \qquad\Longleftrightarrow\qquad F = k\,\delta, \qquad k = \frac{1}{C}.
 $$
 
-- $C$ is the **fastener flexibility** (also *compliance*; Tate and Rosenfeld called it the *bolt constant*). Its units are length per force: mm/N or in/lbf.
-- $k$ is the **fastener stiffness** (also *spring rate*). Its units are force per length: N/mm or lbf/in.
+- $C$ is the **fastener flexibility** (also *compliance*; Tate and Rosenfeld called it the *bolt constant*). Its unit is length per force: mm/N.
+- $k$ is the **fastener stiffness** (also *spring rate*). Its unit is force per length: N/mm.
 
 They carry exactly the same information. Formulas in the literature are almost always written for $C$, because the physical contributions to $\delta$ simply add up; finite element codes almost always ask for $k$. You will constantly be inverting one to get the other, so keep both symbols in your head.
 
@@ -150,12 +152,12 @@ These values are the ones given in Huth's paper and reproduced consistently by l
 
 | Symbol  | Meaning                                                                                                             | Units      |
 | ------- | ------------------------------------------------------------------------------------------------------------------- | ---------- |
-| $C$     | fastener flexibility (compliance); $k = 1/C$ is the stiffness                                                       | mm/N, in/lbf |
-| $t_1$   | thickness of plate 1. In double shear, the **centre** plate.                                                        | mm, in     |
-| $t_2$   | thickness of plate 2. In double shear, **one** of the two identical outer plates.                                   | mm, in     |
-| $d$     | fastener (shank / hole) diameter                                                                                    | mm, in     |
-| $E_1$, $E_2$ | Young's modulus of plate 1 and plate 2 in the load direction                                                   | MPa, psi   |
-| $E_f$   | Young's modulus of the fastener                                                                                     | MPa, psi   |
+| $C$     | fastener flexibility (compliance); $k = 1/C$ is the stiffness                                                       | mm/N       |
+| $t_1$   | thickness of plate 1. In double shear, the **centre** plate.                                                        | mm         |
+| $t_2$   | thickness of plate 2. In double shear, **one** of the two identical outer plates.                                   | mm         |
+| $d$     | fastener (shank / hole) diameter                                                                                    | mm         |
+| $E_1$, $E_2$ | Young's modulus of plate 1 and plate 2 in the load direction                                                   | MPa        |
+| $E_f$   | Young's modulus of the fastener                                                                                     | MPa        |
 | $n$     | number of shear planes: 1 for single shear, 2 for double shear                                                      | –          |
 | $a$, $b$ | empirical constants depending on joint type (table above)                                                          | –          |
 
@@ -190,22 +192,18 @@ The version of the formula printed in ASTM STP 927 has been reported by several 
 
 ## 6. Unit consistency
 
-The Huth formula contains no hidden unit conversions. It is *dimensionally homogeneous*: the bracket has units of 1/(length × stress) = length/force, and the two prefactors are dimensionless. That means it works in **any consistent unit system**, provided you never mix systems inside one calculation.
+The Huth formula contains no hidden unit conversions. It is *dimensionally homogeneous*: the bracket has units of 1/(length × stress) = length/force, and the two prefactors are dimensionless. Throughout this paper every length is in millimetres and every modulus is in megapascals.
 
-| Quantity        | SI (preferred)      | US customary            |
-| --------------- | ------------------- | ----------------------- |
-| $t_1$, $t_2$, $d$ | mm                | in                      |
-| $E_1$, $E_2$, $E_f$ | MPa (= N/mm²)   | psi (= lbf/in²)         |
-| $C$             | mm/N                | in/lbf                  |
-| $k = 1/C$       | N/mm                | lbf/in                  |
+| Quantity            | Unit              |
+| ------------------- | ----------------- |
+| $t_1$, $t_2$, $d$   | mm                |
+| $E_1$, $E_2$, $E_f$ | MPa (= N/mm²)     |
+| $C$                 | mm/N              |
+| $k = 1/C$           | N/mm              |
 
-Three traps catch beginners:
+The trap that catches beginners is mixing GPa with mm. Material data sheets quote $E$ in GPa; with thickness in mm you must enter $E$ in MPa (72 GPa = 72 000 MPa). With mm and GPa the formula returns $C$ in mm/kN, which is a factor of 1000 out and easy to miss.
 
-1. **GPa and mm.** Material data sheets quote $E$ in GPa; if you keep thickness in mm you must enter $E$ in MPa (72 GPa = 72 000 MPa). With mm and GPa you would get $C$ in mm/kN, which is a factor of 1000 out and easy to miss.
-2. **Msi and inches.** In US units $E$ is often written "10.5 Msi"; enter it as $10.5\times10^{6}$ psi.
-3. **Converting the answer.** $1\ \text{lbf/in} = 4.448\,\text{N} / 25.4\,\text{mm} = 0.1751\ \text{N/mm}$. Equivalently $1\ \text{in/lbf} = 5.710\ \text{mm/N}$. Example 3 below checks this.
-
-A sanity range: for typical aerospace sheet joints (2–6 mm aluminium, 4–8 mm fasteners), $C$ comes out between roughly $5\times10^{-6}$ and $5\times10^{-5}$ mm/N, i.e. stiffnesses of about 20 to 200 kN/mm. If you get $10^{-2}$ or $10^{-9}$, check your units.
+A sanity range: for typical aerospace sheet joints (2–6 mm aluminium, 4–8 mm fasteners), $C$ comes out between roughly $5\times10^{-6}$ and $5\times10^{-5}$ mm/N, i.e. stiffnesses of about 20 to 200 kN/mm. If you get $10^{-2}$ or $10^{-9}$, check that every modulus is in MPa and every length is in mm.
 
 ---
 
@@ -213,9 +211,9 @@ A sanity range: for typical aerospace sheet joints (2–6 mm aluminium, 4–8 mm
 
 All arithmetic below is shown to four significant figures so that you can reproduce it on a calculator.
 
-### Example 1: single-shear bolted aluminium joint (SI units)
+### Example 1: single-shear bolted aluminium joint
 
-**Given.** Two aluminium plates, $t_1 = 3.0$ mm and $t_2 = 4.0$ mm, $E_1 = E_2 = 72\,000$ MPa, joined by a steel bolt $d = 6.35$ mm (1/4 in), $E_f = 200\,000$ MPa. Single shear.
+**Given.** Two aluminium plates, $t_1 = 3.0$ mm and $t_2 = 4.0$ mm, $E_1 = E_2 = 72\,000$ MPa, joined by a steel bolt $d = 6.35$ mm, $E_f = 200\,000$ MPa. Single shear.
 
 **Constants.** Bolted metallic: $a = 2/3$, $b = 3.0$; single shear: $n = 1$.
 
@@ -247,7 +245,7 @@ $$
 
 **Interpretation.** A 1 kN fastener load produces about 0.019 mm of relative displacement between the plates at this bolt. The two plate-bearing terms make up 85 % of the bracket; the fastener-bearing terms 15 %.
 
-### Example 2: double-shear bolted aluminium splice (SI units)
+### Example 2: double-shear bolted aluminium splice
 
 **Given.** A 6.0 mm aluminium centre plate spliced with two 3.0 mm aluminium straps, $E_1 = E_2 = 72\,000$ MPa, by a steel bolt $d = 8.0$ mm, $E_f = 200\,000$ MPa. Double shear.
 
@@ -281,29 +279,43 @@ $$
 
 **Interpretation.** This double-shear bolt is about 3.5 times stiffer than the single-shear bolt of Example 1. Part of that is the larger diameter and thicker plates, and part is the symmetric load path. If you model it with two springs, one per shear plane, each spring gets $2C = 1.117\times10^{-5}$ mm/N, i.e. $k = 89.5$ kN/mm each.
 
-### Example 3: single-shear riveted aluminium sheet (US customary units)
+### Example 3: single-shear riveted aluminium sheet
 
-This example exists mainly to show the unit handling and the riveted constants.
+This example uses the riveted constants on thin 2024-T3 aluminium sheet.
 
-**Given.** Two 0.063 in 2024-T3 sheets, $E_1 = E_2 = 10.5\times10^{6}$ psi, joined by a 5/32 in ($d = 0.156$ in) aluminium rivet, $E_f = 10.3\times10^{6}$ psi. Single shear.
+**Given.** Two 1.600 mm 2024-T3 sheets, $E_1 = E_2 = 72\,395$ MPa, joined by an aluminium rivet $d = 3.962$ mm, $E_f = 71\,016$ MPa. Single shear.
 
 **Constants.** Riveted metallic: $a = 2/5$, $b = 2.2$; $n = 1$.
 
-$$
-\frac{t_1+t_2}{2d} = \frac{0.126}{0.312} = 0.4038, \qquad 0.4038^{0.4} = 0.6958.
-$$
+**Step 1 – geometry factor.**
 
 $$
-\text{bracket} = 2\times\frac{1}{0.063 \times 10.5\times10^{6}} + 2\times\frac{1}{2 \times 0.063 \times 10.3\times10^{6}} = 3.023\times10^{-6} + 1.541\times10^{-6} = 4.565\times10^{-6}\ \text{in/lbf}.
+\frac{t_1+t_2}{2d} = \frac{1.600 + 1.600}{2 \times 3.962} = 0.4038, \qquad 0.4038^{2/5} = 0.6958.
 $$
 
+**Step 2 – joint-type factor.** $b/n = 2.2/1 = 2.2$.
+
+**Step 3 – the bracket.**
+
 $$
-C = 0.6958 \times 2.2 \times 4.565\times10^{-6} = 6.987\times10^{-6}\ \text{in/lbf}, \qquad k = 143\,100\ \text{lbf/in}.
+\begin{aligned}
+\frac{1}{t_1E_1} &= \frac{1}{1.600 \times 72\,395} = 8.633\times10^{-6} \\
+\frac{1}{n\,t_2E_2} &= \frac{1}{1.600 \times 72\,395} = 8.633\times10^{-6} \\
+\frac{1}{2\,t_1E_f} &= \frac{1}{2 \times 1.600 \times 71\,016} = 4.400\times10^{-6} \\
+\frac{1}{2\,n\,t_2E_f} &= \frac{1}{2 \times 1.600 \times 71\,016} = 4.400\times10^{-6} \\
+\text{sum} &= 2.6066\times10^{-5}\ \text{mm/N}
+\end{aligned}
 $$
 
-**Unit check.** Converting: $k = 143\,100 \times 0.1751 = 25\,060$ N/mm. Redoing the whole calculation in SI ($t = 1.600$ mm, $d = 3.962$ mm, $E = 72\,395$ MPa, $E_f = 71\,016$ MPa) gives $C = 3.990\times10^{-5}$ mm/N and $k = 25\,060$ N/mm, the same number. The formula does not care which consistent system you use.
+**Step 4 – combine.**
 
-### Example 4: single-shear bolted carbon/epoxy joint (SI units)
+$$
+C = 0.6958 \times 2.2 \times 2.6066\times10^{-5} = 3.990\times10^{-5}\ \text{mm/N}, \qquad k = \frac{1}{C} = 25\,060\ \text{N/mm}.
+$$
+
+**Interpretation.** The two plate-bearing terms are 66 % of the bracket and the fastener-bearing terms 34 %. The fastener share is larger than the 15 % of Example 1 because the aluminium rivet modulus is close to the sheet modulus, not several times higher as it is for a steel bolt.
+
+### Example 4: single-shear bolted carbon/epoxy joint
 
 **Given.** Two quasi-isotropic carbon/epoxy laminates, $t_1 = t_2 = 4.0$ mm, in-plane modulus $E_1 = E_2 = 55\,000$ MPa, joined by a titanium bolt $d = 6.35$ mm, $E_f = 110\,000$ MPa. Single shear.
 
@@ -491,7 +503,7 @@ Before you write down a Huth flexibility:
 - [ ] Decide which plate is 1 and which is 2. In double shear, plate 1 is the **centre** plate and $t_2$ is the thickness of **one** outer plate.
 - [ ] Set $n$: 1 for single shear, 2 for double shear.
 - [ ] Pick $a$, $b$ from the joint type: bolted metallic (2/3, 3.0), riveted metallic (2/5, 2.2), bolted graphite/epoxy (2/3, 4.2).
-- [ ] Put all lengths in mm and all moduli in MPa (or all lengths in inches and all moduli in psi). Never mix.
+- [ ] Put all lengths in mm and all moduli in MPa. Do not enter a modulus in GPa.
 - [ ] Check the bracket's third term is $1/(2\,t_1E_f)$, not $1/(n\,t_1E_f)$.
 - [ ] Sanity-check: $C$ should be of order $10^{-6}$–$10^{-5}$ mm/N for typical aircraft joints; swapping plates 1 and 2 should not change the single-shear answer when $E_1 = E_2$.
 - [ ] Invert to $k = 1/C$ for the finite element input, and halve $k$ per spring if your double-shear model uses one spring per shear plane.

@@ -26,7 +26,7 @@ The implementation follows the symmetric form from Huth's original LBF report FB
 | `src/lib/*.test.ts` | Vitest unit tests, including worked examples |
 | `src/components/` | React UI (inputs, results, explanation) built with shadcn/ui |
 | `.github/workflows/deploy-pages.yml` | Build and deploy to GitHub Pages |
-| `paper/` | Explanatory paper on the Huth formula (added separately) |
+| `paper/` | Beginner paper, metric units: [English](paper/huth-formula.md), [简体中文](paper/huth-formula.zh.md) |
 
 ## Running locally
 
