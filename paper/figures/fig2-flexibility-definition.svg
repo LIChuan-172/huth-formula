@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="446.4pt" height="273.6pt" viewBox="0 0 446.4 273.6" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09-28T03:23:55.585108</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 273.6 
+L 446.4 273.6 
+L 446.4 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 33.858 248.477656 
+L 435.6 248.477656 
+L 435.6 24.72 
+L 33.858 24.72 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="text_1">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="234.729" y="260.076094" transform="rotate(-0 234.729 260.076094)">relative displacement between plates, δ</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="text_2">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="27.455656" y="136.598828" transform="rotate(-90 27.455656 136.598828)">transferred load, F</text>
+    </g>
+   </g>
+   <g id="line2d_1">
+    <path d="M 33.858 248.477656 
+L 39.232475 239.426504 
+L 44.60695 230.754649 
+L 49.981425 222.446197 
+L 55.3559 214.485918 
+L 60.730375 206.859223 
+L 66.104849 199.552132 
+L 71.479324 192.551252 
+L 76.853799 185.84375 
+L 83.571893 177.853257 
+L 90.289987 170.279109 
+L 97.00808 163.099614 
+L 103.726174 156.294208 
+L 110.444268 149.843398 
+L 117.162361 143.728708 
+L 123.880455 137.932626 
+L 130.598548 132.438549 
+L 137.316642 127.230742 
+L 144.034736 122.294289 
+L 150.752829 117.61505 
+L 157.470923 113.179624 
+L 164.189017 108.975306 
+L 172.250729 104.218278 
+L 180.312441 99.757116 
+L 188.374154 95.57342 
+L 196.435866 91.649932 
+L 204.497579 87.970468 
+L 212.559291 84.519851 
+L 220.621003 81.283848 
+L 230.026334 77.761998 
+L 239.431666 74.494352 
+L 248.836997 71.46256 
+L 258.242328 68.649601 
+L 268.991278 65.682537 
+L 279.740227 62.958939 
+L 290.489177 60.458828 
+L 302.581746 57.890566 
+L 314.674314 55.558141 
+L 326.766883 53.439897 
+L 340.20307 51.313633 
+L 353.639258 49.403176 
+L 368.419064 47.524854 
+L 384.542488 45.712869 
+L 400.665913 44.119271 
+L 418.132957 42.608866 
+L 435.6 41.294641 
+L 435.6 41.294641 
+" clip-path="url(#pae00c2b998)" style="fill: none; stroke: #718096; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 33.858 248.477656 
+L 162.41544 110.06445 
+" clip-path="url(#pae00c2b998)" style="fill: none; stroke: #2b6cb0; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 162.41544 248.477656 
+L 162.41544 110.06445 
+" clip-path="url(#pae00c2b998)" style="fill: none; stroke-dasharray: 0.8,1.32; stroke-dashoffset: 0; stroke: #2b6cb0; stroke-width: 0.8"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 33.858 110.06445 
+L 162.41544 110.06445 
+" clip-path="url(#pae00c2b998)" style="fill: none; stroke-dasharray: 0.8,1.32; stroke-dashoffset: 0; stroke: #2b6cb0; stroke-width: 0.8"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 33.858 248.477656 
+L 33.858 24.72 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 33.858 248.477656 
+L 435.6 248.477656 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #2b6cb0" x="170.45028" y="181.738826" transform="rotate(-0 170.45028 181.738826)">δ = C·F</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #2b6cb0" x="98.13672" y="260.908637" transform="rotate(-0 98.13672 260.908637)">δ</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #2b6cb0" x="13.7709" y="112.662106" transform="rotate(-0 13.7709 112.662106)">F</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #4a5568" transform="translate(282.93804 145.356628)">plate elongation P·L/(E·A)</text>
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #4a5568" transform="translate(282.93804 155.558953)">has already been subtracted;</text>
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #4a5568" transform="translate(282.93804 165.761277)">δ is the extra displacement</text>
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #4a5568" transform="translate(282.93804 175.963601)">caused by the fastener</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="234.729" y="18.72" transform="rotate(-0 234.729 18.72)">How fastener flexibility C is read from a test</text>
+   </g>
+   <g id="legend_1">
+    <g id="line2d_5">
+     <path d="M 226.371172 223.06 
+L 234.871172 223.06 
+L 243.371172 223.06 
+" style="fill: none; stroke: #718096; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="text_8">
+     <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: start" x="250.171172" y="226.035" transform="rotate(-0 250.171172 226.035)">measured load–displacement (schematic)</text>
+    </g>
+    <g id="line2d_6">
+     <path d="M 226.371172 235.810664 
+L 234.871172 235.810664 
+L 243.371172 235.810664 
+" style="fill: none; stroke: #2b6cb0; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="text_9">
+     <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: start" x="250.171172" y="238.785664" transform="rotate(-0 250.171172 238.785664)">linear fit → slope = 1/C</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pae00c2b998">
+   <rect x="33.858" y="24.72" width="401.742" height="223.757656"/>
+  </clipPath>
+ </defs>
+</svg>
