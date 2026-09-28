@@ -1,5 +1,3 @@
-export type UnitSystem = 'si' | 'imperial'
-
 export interface UnitLabels {
   length: string
   modulus: string
@@ -7,39 +5,12 @@ export interface UnitLabels {
   stiffness: string
 }
 
-export const UNIT_LABELS: Record<UnitSystem, UnitLabels> = {
-  si: { length: 'mm', modulus: 'MPa', compliance: 'mm/N', stiffness: 'N/mm' },
-  imperial: { length: 'in', modulus: 'psi', compliance: 'in/lbf', stiffness: 'lbf/in' },
-}
-
-export const MM_PER_INCH = 25.4
-export const PSI_PER_MPA = 145.037737730
-export const LBF_PER_NEWTON = 0.224808943100
-
-/** Converts a length between unit systems. */
-export function convertLength(value: number, from: UnitSystem, to: UnitSystem): number {
-  if (from === to) return value
-  return from === 'si' ? value / MM_PER_INCH : value * MM_PER_INCH
-}
-
-/** Converts a modulus/stress between MPa and psi. */
-export function convertModulus(value: number, from: UnitSystem, to: UnitSystem): number {
-  if (from === to) return value
-  return from === 'si' ? value * PSI_PER_MPA : value / PSI_PER_MPA
-}
-
-/** Converts a stiffness between N/mm and lbf/in. */
-export function convertStiffness(value: number, from: UnitSystem, to: UnitSystem): number {
-  if (from === to) return value
-  const lbfPerInPerNPerMm = LBF_PER_NEWTON * MM_PER_INCH
-  return from === 'si' ? value * lbfPerInPerNPerMm : value / lbfPerInPerNPerMm
-}
-
-/** Converts a compliance between mm/N and in/lbf. */
-export function convertCompliance(value: number, from: UnitSystem, to: UnitSystem): number {
-  if (from === to) return value
-  // compliance is the reciprocal of stiffness
-  return 1 / convertStiffness(1 / value, from, to)
+/** Metric labels used throughout the calculator. Lengths are millimetres and moduli are megapascals. */
+export const METRIC_UNITS: UnitLabels = {
+  length: 'mm',
+  modulus: 'MPa',
+  compliance: 'mm/N',
+  stiffness: 'N/mm',
 }
 
 /**

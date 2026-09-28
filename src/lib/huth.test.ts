@@ -76,34 +76,23 @@ describe('computeHuth – worked example (SI, single shear, bolted metallic)', (
   })
 })
 
-describe('computeHuth – worked example (imperial, double shear, bolted metallic)', () => {
-  // 0.040 in outer plates, 0.063 in middle plate, 3/16 in bolt,
-  // aluminium plates (10.5 Msi) and steel fastener (16 Msi).
-  //   geometry factor = ((0.040 + 0.063) / (2 · 0.1875))^(2/3)         = 0.422543
+describe('computeHuth – worked example (mm and MPa, double shear, bolted metallic)', () => {
+  // Same 2 mm and 3 mm aluminium sheets and 5 mm titanium bolt as the single-shear example.
+  //   geometry factor = ((2 + 3) / (2 · 5))^(2/3)                       = 0.629961
   //   b / n           = 3.0 / 2                                          = 1.5
-  //   bracket sum     = 1/(0.040·10.5e6) + 1/(2·0.063·10.5e6)
-  //                   + 1/(2·0.040·16e6) + 1/(2·2·0.063·16e6)          = 4.16608e-6 in/lbf
-  //   C               = 0.422543 · 1.5 · 4.16608e-6                     = 2.64052e-6 in/lbf
-  //   k               = 1 / C                                           = 378 714 lbf/in
-  const result = computeHuth({
-    t1: 0.04,
-    t2: 0.063,
-    d: 0.1875,
-    E1: 10.5e6,
-    E2: 10.5e6,
-    Ef: 16e6,
-    shear: 'double',
-    a: 2 / 3,
-    b: 3.0,
-  })
+  //   bracket sum     = 1/(2·72000) + 1/(2·3·72000)
+  //                   + 1/(2·2·110000) + 1/(2·2·3·110000)               = 1.22896e-5 mm/N
+  //   C               = 0.629961 · 1.5 · 1.22896e-5                     = 1.16129e-5 mm/N
+  //   k               = 1 / C                                           = 86 111 N/mm
+  const result = computeHuth({ ...siExample, shear: 'double' })
 
   it('computes compliance and stiffness', () => {
     expect(result.n).toBe(2)
-    expect(result.geometryFactor).toBeCloseTo(0.422543, 6)
+    expect(result.geometryFactor).toBeCloseTo(0.629961, 6)
     expect(result.jointFactor).toBe(1.5)
-    expect(result.bracketSum).toBeCloseTo(4.16608e-6, 11)
-    expect(result.compliance).toBeCloseTo(2.64052e-6, 11)
-    expect(result.stiffness).toBeCloseTo(378_714, 0)
+    expect(result.bracketSum).toBeCloseTo(1.22896e-5, 10)
+    expect(result.compliance).toBeCloseTo(1.16129e-5, 10)
+    expect(result.stiffness).toBeCloseTo(86_111, 0)
   })
 })
 

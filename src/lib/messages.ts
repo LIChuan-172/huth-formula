@@ -11,10 +11,6 @@ export interface Messages {
     title: string
     description: string
     reset: string
-    units: string
-    unitsSi: string
-    unitsImperial: string
-    unitsHint: string
     shear: string
     shearSingle: string
     shearDouble: string
@@ -29,7 +25,6 @@ export interface Messages {
     geometry: string
     materials: string
     typicalSi: string
-    typicalImperial: string
   }
   presets: Record<JointPresetId, { label: string; description: string }>
   fields: Record<HuthField, string>
@@ -99,7 +94,7 @@ const en = {
   header: {
     eyebrow: 'Fastener flexibility',
     title: 'Huth fastener stiffness calculator',
-    lede: 'Estimate the shear compliance and stiffness of a bolt or rivet in a lap joint using Huth’s 1986 formula. Supports single and double shear, metallic and composite plates, SI and imperial units.',
+    lede: 'Estimate the shear compliance and stiffness of a bolt or rivet in a lap joint using Huth’s 1986 formula. Supports single and double shear, and metallic and composite plates. Thicknesses and diameter are in mm; moduli are in MPa.',
     aboutLink: 'How the formula works',
   },
   footer: {
@@ -110,10 +105,6 @@ const en = {
     title: 'Joint definition',
     description: 'Results update as you type. Plate 2 is the middle plate in a double-shear joint.',
     reset: 'Reset',
-    units: 'Unit system',
-    unitsSi: 'SI (mm, MPa)',
-    unitsImperial: 'Imperial (in, psi)',
-    unitsHint: 'Switching units converts the values you have entered.',
     shear: 'Shear configuration',
     shearSingle: 'Single shear (n = 1)',
     shearDouble: 'Double shear (n = 2)',
@@ -128,7 +119,6 @@ const en = {
     geometry: 'Geometry',
     materials: 'Materials',
     typicalSi: 'Typical: aluminium 72 000, titanium 110 000, steel 210 000 MPa.',
-    typicalImperial: 'Typical: aluminium 10.5e6, titanium 16e6, steel 30e6 psi.',
   },
   presets: {
     'bolted-metallic': {
@@ -213,7 +203,7 @@ const en = {
     limitDoubleShear:
       'For double shear, t1 is the thickness of one outer plate and t2 is the full thickness of the centre plate.',
     limitUnits:
-      'Units must be consistent. With mm and MPa the compliance is in mm/N and the stiffness in N/mm; with in and psi the compliance is in in/lbf and the stiffness in lbf/in.',
+      'Thicknesses and the diameter are in millimetres and moduli are in megapascals. Compliance is then in mm/N and stiffness is in N/mm.',
     references: 'References',
   },
 } satisfies Messages
@@ -232,7 +222,7 @@ const zh = {
   header: {
     eyebrow: '紧固件柔度',
     title: 'Huth 紧固件刚度计算器',
-    lede: '用 Huth 1986 公式估算搭接接头中螺栓或铆钉的剪切柔度与刚度。支持单剪与双剪、金属与复合材料板，以及国际单位制和英制。',
+    lede: '用 Huth 1986 公式估算搭接接头中螺栓或铆钉的剪切柔度与刚度。支持单剪与双剪，以及金属与复合材料板。厚度和直径单位为 mm，模量单位为 MPa。',
     aboutLink: '公式说明',
   },
   footer: {
@@ -243,10 +233,6 @@ const zh = {
     title: '接头定义',
     description: '输入时即时更新结果。双剪接头中，板 2 为中间板。',
     reset: '重置',
-    units: '单位制',
-    unitsSi: '国际单位（mm、MPa）',
-    unitsImperial: '英制（in、psi）',
-    unitsHint: '切换单位会换算已输入的数值。',
     shear: '剪切形式',
     shearSingle: '单剪（n = 1）',
     shearDouble: '双剪（n = 2）',
@@ -261,7 +247,6 @@ const zh = {
     geometry: '几何',
     materials: '材料',
     typicalSi: '典型值：铝 72 000，钛 110 000，钢 210 000 MPa。',
-    typicalImperial: '典型值：铝 10.5e6，钛 16e6，钢 30e6 psi。',
   },
   presets: {
     'bolted-metallic': {
@@ -344,8 +329,7 @@ const zh = {
     limitAssumptions:
       '模型假定弹性行为、紧配合紧固件且无夹紧摩擦。它不考虑孔间隙、干涉配合、锪窝或紧固件预紧力。',
     limitDoubleShear: '双剪时，t1 为一侧外板的厚度，t2 为中间板的全厚度。',
-    limitUnits:
-      '单位必须自洽。使用 mm 与 MPa 时，柔度为 mm/N，刚度为 N/mm；使用 in 与 psi 时，柔度为 in/lbf，刚度为 lbf/in。',
+    limitUnits: '厚度和直径的单位为毫米，模量的单位为兆帕。柔度则为 mm/N，刚度为 N/mm。',
     references: '参考文献',
   },
 } satisfies Messages

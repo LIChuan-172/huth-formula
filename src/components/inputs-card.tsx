@@ -10,13 +10,12 @@ import type { FormState, JointSelection } from '@/lib/calculator-state'
 import { JOINT_PRESETS, type HuthField, type ShearType, type ValidationErrors } from '@/lib/huth'
 import { localizeFieldError } from '@/lib/localize-error'
 import { useLocale } from '@/lib/use-locale'
-import { UNIT_LABELS, type UnitSystem } from '@/lib/units'
+import { METRIC_UNITS } from '@/lib/units'
 
 interface InputsCardProps {
   state: FormState
   errors: ValidationErrors
   onFieldChange: (field: keyof FormState, value: string) => void
-  onUnitsChange: (units: UnitSystem) => void
   onReset: () => void
 }
 
@@ -29,9 +28,8 @@ function Symbol({ base, sub }: { base: string; sub: string }) {
   )
 }
 
-export function InputsCard({ state, errors, onFieldChange, onUnitsChange, onReset }: InputsCardProps) {
+export function InputsCard({ state, errors, onFieldChange, onReset }: InputsCardProps) {
   const { m } = useLocale()
-  const units = UNIT_LABELS[state.units]
   const isCustom = state.joint === 'custom'
   const fieldError = (field: HuthField) => (errors[field] ? localizeFieldError(field, errors[field], m) : undefined)
 
@@ -48,18 +46,7 @@ export function InputsCard({ state, errors, onFieldChange, onUnitsChange, onRese
         </CardAction>
       </CardHeader>
       <CardContent className="grid gap-6">
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="grid gap-1.5">
-            <Label id="units-label">{m.inputs.units}</Label>
-            <Tabs value={state.units} onValueChange={(value) => onUnitsChange(value as UnitSystem)}>
-              <TabsList className="w-full" aria-labelledby="units-label">
-                <TabsTrigger value="si">{m.inputs.unitsSi}</TabsTrigger>
-                <TabsTrigger value="imperial">{m.inputs.unitsImperial}</TabsTrigger>
-              </TabsList>
-            </Tabs>
-            <p className="text-xs text-muted-foreground">{m.inputs.unitsHint}</p>
-          </div>
-          <div className="grid gap-1.5">
+        <div className="grid gap-1.5">
             <Label id="shear-label">{m.inputs.shear}</Label>
             <Tabs value={state.shear} onValueChange={(value) => onFieldChange('shear', value as ShearType)}>
               <TabsList className="w-full" aria-labelledby="shear-label">
@@ -70,7 +57,6 @@ export function InputsCard({ state, errors, onFieldChange, onUnitsChange, onRese
             <p className="text-xs text-muted-foreground">
               {state.shear === 'single' ? m.inputs.shearSingleHint : m.inputs.shearDoubleHint}
             </p>
-          </div>
         </div>
 
         <div className="grid gap-1.5">
@@ -137,7 +123,7 @@ export function InputsCard({ state, errors, onFieldChange, onUnitsChange, onRese
                   {m.fields.t1} <Symbol base="t" sub="1" />
                 </>
               }
-              unit={units.length}
+              unit={METRIC_UNITS.length}
               value={state.t1}
               onChange={(value) => onFieldChange('t1', value)}
               error={fieldError('t1')}
@@ -149,7 +135,7 @@ export function InputsCard({ state, errors, onFieldChange, onUnitsChange, onRese
                   {m.fields.t2} <Symbol base="t" sub="2" />
                 </>
               }
-              unit={units.length}
+              unit={METRIC_UNITS.length}
               value={state.t2}
               onChange={(value) => onFieldChange('t2', value)}
               error={fieldError('t2')}
@@ -161,7 +147,7 @@ export function InputsCard({ state, errors, onFieldChange, onUnitsChange, onRese
                   {m.fields.d} <span className="font-serif italic">d</span>
                 </>
               }
-              unit={units.length}
+              unit={METRIC_UNITS.length}
               value={state.d}
               onChange={(value) => onFieldChange('d', value)}
               error={fieldError('d')}
@@ -179,7 +165,7 @@ export function InputsCard({ state, errors, onFieldChange, onUnitsChange, onRese
                   {m.fields.E1} <Symbol base="E" sub="1" />
                 </>
               }
-              unit={units.modulus}
+              unit={METRIC_UNITS.modulus}
               value={state.E1}
               onChange={(value) => onFieldChange('E1', value)}
               error={fieldError('E1')}
@@ -191,7 +177,7 @@ export function InputsCard({ state, errors, onFieldChange, onUnitsChange, onRese
                   {m.fields.E2} <Symbol base="E" sub="2" />
                 </>
               }
-              unit={units.modulus}
+              unit={METRIC_UNITS.modulus}
               value={state.E2}
               onChange={(value) => onFieldChange('E2', value)}
               error={fieldError('E2')}
@@ -203,15 +189,13 @@ export function InputsCard({ state, errors, onFieldChange, onUnitsChange, onRese
                   {m.fields.Ef} <Symbol base="E" sub="f" />
                 </>
               }
-              unit={units.modulus}
+              unit={METRIC_UNITS.modulus}
               value={state.Ef}
               onChange={(value) => onFieldChange('Ef', value)}
               error={fieldError('Ef')}
             />
           </div>
-          <p className="text-xs text-muted-foreground">
-            {state.units === 'si' ? m.inputs.typicalSi : m.inputs.typicalImperial}
-          </p>
+          <p className="text-xs text-muted-foreground">{m.inputs.typicalSi}</p>
         </fieldset>
       </CardContent>
     </Card>

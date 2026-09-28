@@ -9,21 +9,16 @@ import type { HuthField, HuthInput, HuthResult, ValidationErrors } from '@/lib/h
 import { localizeFieldError } from '@/lib/localize-error'
 import { useLocale } from '@/lib/use-locale'
 import type { Messages } from '@/lib/messages'
-import { UNIT_LABELS, convertCompliance, convertStiffness, formatNumber, type UnitSystem } from '@/lib/units'
+import { METRIC_UNITS, formatNumber } from '@/lib/units'
 
 interface ResultsCardProps {
-  units: UnitSystem
   input: HuthInput
   result: HuthResult | null
   errors: ValidationErrors
 }
 
-function otherSystem(units: UnitSystem): UnitSystem {
-  return units === 'si' ? 'imperial' : 'si'
-}
-
-function buildSummary(units: UnitSystem, input: HuthInput, result: HuthResult, m: Messages): string {
-  const u = UNIT_LABELS[units]
+function buildSummary(input: HuthInput, result: HuthResult, m: Messages): string {
+  const u = METRIC_UNITS
   const lines = [
     m.results.summaryTitle,
     `t1 = ${input.t1} ${u.length}, t2 = ${input.t2} ${u.length}, d = ${input.d} ${u.length}`,
@@ -35,12 +30,10 @@ function buildSummary(units: UnitSystem, input: HuthInput, result: HuthResult, m
   return lines.join('\n')
 }
 
-export function ResultsCard({ units, input, result, errors }: ResultsCardProps) {
+export function ResultsCard({ input, result, errors }: ResultsCardProps) {
   const { m } = useLocale()
   const [copied, setCopied] = useState(false)
-  const u = UNIT_LABELS[units]
-  const other = otherSystem(units)
-  const ou = UNIT_LABELS[other]
+  const u = METRIC_UNITS
 
   useEffect(() => {
     if (!copied) return
@@ -51,7 +44,7 @@ export function ResultsCard({ units, input, result, errors }: ResultsCardProps) 
   async function copySummary() {
     if (!result) return
     try {
-      await navigator.clipboard.writeText(buildSummary(units, input, result, m))
+      await navigator.clipboard.writeText(buildSummary(input, result, m))
       setCopied(true)
     } catch {
       setCopied(false)
@@ -83,7 +76,6 @@ export function ResultsCard({ units, input, result, errors }: ResultsCardProps) 
                 symbol="k"
                 value={formatNumber(result.stiffness)}
                 unit={u.stiffness}
-                secondary={`${formatNumber(convertStiffness(result.stiffness, units, other))} ${ou.stiffness}`}
                 emphasis
               />
               <ResultTile
@@ -91,7 +83,6 @@ export function ResultsCard({ units, input, result, errors }: ResultsCardProps) 
                 symbol="C"
                 value={formatNumber(result.compliance)}
                 unit={u.compliance}
-                secondary={`${formatNumber(convertCompliance(result.compliance, units, other))} ${ou.compliance}`}
               />
             </div>
 
@@ -189,11 +180,10 @@ interface ResultTileProps {
   symbol: string
   value: string
   unit: string
-  secondary: string
   emphasis?: boolean
 }
 
-function ResultTile({ label, symbol, value, unit, secondary, emphasis }: ResultTileProps) {
+function ResultTile({ label, symbol, value, unit, emphasis }: ResultTileProps) {
   return (
     <div className={emphasis ? 'rounded-xl bg-primary p-4 text-primary-foreground' : 'rounded-xl bg-muted p-4'}>
       <div className="flex items-baseline justify-between text-xs uppercase tracking-wide opacity-80">
@@ -204,7 +194,6 @@ function ResultTile({ label, symbol, value, unit, secondary, emphasis }: ResultT
         <span className="font-mono text-2xl font-semibold tabular-nums whitespace-nowrap">{value}</span>
         <span className="text-sm opacity-80">{unit}</span>
       </div>
-      <div className="mt-1 font-mono text-xs tabular-nums whitespace-nowrap opacity-70">= {secondary}</div>
     </div>
   )
 }

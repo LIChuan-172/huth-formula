@@ -62,8 +62,8 @@ export function shearPlanes(shear: ShearType): 1 | 2 {
 }
 
 /**
- * All quantities must be in a consistent unit system, e.g. mm and MPa (N/mm²)
- * giving C in mm/N and k in N/mm, or in and psi giving C in in/lbf and k in lbf/in.
+ * All quantities are metric: thicknesses and diameter in mm, moduli in MPa (N/mm²),
+ * giving C in mm/N and k in N/mm.
  */
 export interface HuthInput {
   /** Thickness of plate 1 (outer plate in double shear). */

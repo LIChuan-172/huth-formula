@@ -3,10 +3,9 @@ import { Explanation } from '@/components/explanation'
 import { InputsCard } from '@/components/inputs-card'
 import { LanguageSwitch } from '@/components/language-switch'
 import { ResultsCard } from '@/components/results-card'
-import { convertFormUnits, defaultFormState, parseForm, type FormState } from '@/lib/calculator-state'
+import { defaultFormState, parseForm, type FormState } from '@/lib/calculator-state'
 import { computeHuth } from '@/lib/huth'
 import { useLocale } from '@/lib/use-locale'
-import type { UnitSystem } from '@/lib/units'
 
 export default function App() {
   const { m } = useLocale()
@@ -17,10 +16,6 @@ export default function App() {
 
   function handleFieldChange(field: keyof FormState, value: string) {
     setState((previous) => ({ ...previous, [field]: value }))
-  }
-
-  function handleUnitsChange(units: UnitSystem) {
-    setState((previous) => convertFormUnits(previous, units))
   }
 
   return (
@@ -52,12 +47,11 @@ export default function App() {
             state={state}
             errors={parsed.errors}
             onFieldChange={handleFieldChange}
-            onUnitsChange={handleUnitsChange}
             onReset={() => setState(defaultFormState())}
           />
         </div>
         <div className="grid gap-6 lg:col-span-5 lg:sticky lg:top-6">
-          <ResultsCard units={state.units} input={parsed.input} result={result} errors={parsed.errors} />
+          <ResultsCard input={parsed.input} result={result} errors={parsed.errors} />
         </div>
         <div className="lg:col-span-12">
           <Explanation />

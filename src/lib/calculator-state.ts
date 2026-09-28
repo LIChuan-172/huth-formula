@@ -7,12 +7,10 @@ import {
   type ShearType,
   type ValidationErrors,
 } from './huth'
-import { convertLength, convertModulus, type UnitSystem } from './units'
 
 export type JointSelection = JointPresetId | 'custom'
 
 export interface FormState {
-  units: UnitSystem
   shear: ShearType
   joint: JointSelection
   t1: string
@@ -27,13 +25,9 @@ export interface FormState {
   b: string
 }
 
-export const LENGTH_FIELDS = ['t1', 't2', 'd'] as const
-export const MODULUS_FIELDS = ['E1', 'E2', 'Ef'] as const
-
 /** 2 mm and 3 mm aluminium sheets joined by a 5 mm titanium bolt. */
 export function defaultFormState(): FormState {
   return {
-    units: 'si',
     shear: 'single',
     joint: 'bolted-metallic',
     t1: '2',
@@ -45,46 +39,6 @@ export function defaultFormState(): FormState {
     a: '0.6667',
     b: '3',
   }
-}
-
-const MAX_INPUT_DIGITS = 8
-const SNAP_TOLERANCE = 1e-6
-
-/**
- * Formats a converted value using the fewest significant digits that stay
- * within a relative tolerance of the exact value. This keeps round-trip
- * conversions (2 mm → in → mm) from turning into 1.99999 while still showing
- * enough digits for genuinely non-round values.
- */
-export function formatInputValue(value: number): string {
-  if (!Number.isFinite(value)) return ''
-  if (value === 0) return '0'
-  for (let digits = 1; digits < MAX_INPUT_DIGITS; digits++) {
-    const candidate = Number(value.toPrecision(digits))
-    if (Math.abs(candidate - value) <= Math.abs(value) * SNAP_TOLERANCE) {
-      return String(candidate)
-    }
-  }
-  return String(Number(value.toPrecision(MAX_INPUT_DIGITS)))
-}
-
-/** Converts every dimensional field of the form to a new unit system. */
-export function convertFormUnits(state: FormState, units: UnitSystem): FormState {
-  if (state.units === units) return state
-  const next: FormState = { ...state, units }
-  for (const key of LENGTH_FIELDS) {
-    const value = Number(state[key])
-    if (state[key].trim() !== '' && Number.isFinite(value)) {
-      next[key] = formatInputValue(convertLength(value, state.units, units))
-    }
-  }
-  for (const key of MODULUS_FIELDS) {
-    const value = Number(state[key])
-    if (state[key].trim() !== '' && Number.isFinite(value)) {
-      next[key] = formatInputValue(convertModulus(value, state.units, units))
-    }
-  }
-  return next
 }
 
 export interface ParsedForm {

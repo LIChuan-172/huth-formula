@@ -9,7 +9,7 @@ k = 1 / C
 
 - `n = 1` for single shear, `n = 2` for double shear
 - Joint-type constants: bolted metallic `a = 2/3, b = 3.0`; riveted metallic `a = 2/5, b = 2.2`; bolted graphite/epoxy `a = 2/3, b = 4.2`; or enter your own `a` and `b`
-- SI (mm, MPa → mm/N, N/mm) and imperial (in, psi → in/lbf, lbf/in) units, with conversion when you switch
+- Metric units only: thicknesses and diameter in mm, moduli in MPa, compliance in mm/N, stiffness in N/mm
 - Shows the intermediate factors and each bearing term's share of the total flexibility
 - Input validation and an explanation of the formula, its symbols and its limits
 - English and Chinese interface, with a language switch in the page header (the choice is remembered in the browser)
@@ -21,7 +21,7 @@ The implementation follows the symmetric form from Huth's original LBF report FB
 | Path | Contents |
 | --- | --- |
 | `src/lib/huth.ts` | Calculation core: presets, validation, `computeHuth()` |
-| `src/lib/units.ts` | Unit systems, conversions and number formatting |
+| `src/lib/units.ts` | Metric unit labels (mm, MPa, mm/N, N/mm) and number formatting |
 | `src/lib/calculator-state.ts` | Form state, parsing and unit switching |
 | `src/lib/*.test.ts` | Vitest unit tests, including worked examples |
 | `src/components/` | React UI (inputs, results, explanation) built with shadcn/ui |
